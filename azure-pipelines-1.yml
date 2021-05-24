@@ -9,7 +9,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world Im testing!
+- script: echo Testing!
   displayName: 'yml test script'
   
 - script: |
@@ -22,7 +22,7 @@ steps:
 - script: |
     docker pull github/super-linter:latest
     docker run -e RUN_LOCAL=true -v $(System.DefaultWorkingDirectory):/tmp/lint github/super-linter
-  displayName: 'Pruebas con Super-linter'
+  displayName: 'Pruebas con Super linter'
 
 - task: ArchiveFiles@2
   inputs:
