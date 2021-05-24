@@ -1,0 +1,33 @@
+
+
+trigger:
+  branches:
+    include:
+    - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world Im testing!
+  displayName: 'yml test script'
+  
+- script: |
+    python -m pip install --upgrade pip
+    ls -all
+    pwd
+    sudo apt-get install sshpass
+  displayName: 'Install dependencies'
+
+- script: |
+    docker pull github/super-linter:latest
+    docker run -e RUN_LOCAL=true -v $(System.DefaultWorkingDirectory):/tmp/lint github/super-linter
+  displayName: 'Pruebas con Super-linter'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(build.sourcesDirectory)'
+    includeRootFolder: false
+- task: PublishBuildArtifacts@1
+
+
